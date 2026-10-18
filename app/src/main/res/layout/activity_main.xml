@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:textSize="96sp"
             android:autoSizeMaxTextSize="140sp"
             android:autoSizeMinTextSize="40sp"
             android:autoSizeTextType="uniform"

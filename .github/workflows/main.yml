@@ -41,6 +41,24 @@ jobs:
       - name: Lint
         run: ./gradlew --no-daemon lintDebug
 
+      - name: Fail on API-level problems (NewApi) and surface lint errors
+        run: |
+          R=app/build/reports/lint-results-debug.xml
+          [ -f "$R" ] || { echo "no lint xml"; exit 0; }
+          python3 - "$R" <<'PY'
+          import sys, xml.etree.ElementTree as ET
+          bad = 0
+          for i in ET.parse(sys.argv[1]).getroot().iter('issue'):
+              sev, iid = i.get('severity'), i.get('id')
+              loc = i.find('location')
+              where = f"{loc.get('file','?').split('/app/')[-1]}:{loc.get('line','?')}" if loc is not None else '?'
+              if sev in ('Error', 'Fatal') or iid in ('NewApi', 'InlinedApi'):
+                  print(f"::warning::lint {iid} ({sev}) {where}: {i.get('message')}")
+                  if iid == 'NewApi' or sev == 'Fatal':
+                      bad += 1
+          sys.exit(1 if bad else 0)
+          PY
+
       - name: Build APKs (debug + release)
         run: ./gradlew --no-daemon assembleDebug assembleRelease
 
@@ -55,6 +73,7 @@ jobs:
             echo "================ $f"
             unzip -tq "$f"
             "$BT/aapt2" dump badging "$f" | grep -E "^package:|sdkVersion|targetSdkVersion|launchable-activity" || true
+            echo "::notice::$(basename $f) $("$BT/aapt2" dump badging "$f" | grep -E "^sdkVersion|^package:" | tr '\n' ' ') size=$(stat -c%s "$f")"
             "$BT/apksigner" verify --verbose --print-certs "$f" | grep -E "Verified using|Signer #1 certificate (DN|SHA-256)"
             ls -lh "$f"
           done

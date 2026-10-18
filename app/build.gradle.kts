@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId = "com.drivelite.launcher"
-        minSdk = 31          // Android 12
+        minSdk = 21          // Android 5+ : many head units report a fake (newer) Android version
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.0.2"
     }
 
     // Fixed key committed to the repo so every CI build has the SAME signature

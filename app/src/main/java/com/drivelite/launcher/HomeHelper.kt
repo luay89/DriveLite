@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.os.Build
 import android.provider.Settings
 
 /**
@@ -22,7 +23,7 @@ object HomeHelper {
     private fun homeIntent() = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
 
     fun isDefaultHome(ctx: Context): Boolean {
-        try {
+        if (Build.VERSION.SDK_INT >= 29) try {
             val rm = ctx.getSystemService(RoleManager::class.java)
             if (rm != null && rm.isRoleAvailable(RoleManager.ROLE_HOME)) return rm.isRoleHeld(RoleManager.ROLE_HOME)
         } catch (e: RuntimeException) { /* some vendor builds strip RoleManager — fall through */ }
@@ -32,7 +33,7 @@ object HomeHelper {
 
     /** Asks the system to make DriveLite the Home app (system dialog), else opens Home settings. */
     fun requestDefaultHome(activity: Activity) {
-        try {
+        if (Build.VERSION.SDK_INT >= 29) try {
             val rm = activity.getSystemService(RoleManager::class.java)
             if (rm != null && rm.isRoleAvailable(RoleManager.ROLE_HOME) && !rm.isRoleHeld(RoleManager.ROLE_HOME)) {
                 @Suppress("DEPRECATION")
