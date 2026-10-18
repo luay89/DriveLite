@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="boot_bg">#07090F</color>
+    <color name="icon_bg">#0F1622</color>
+    <color name="icon_fg">#5B8CFF</color>
+</resources>

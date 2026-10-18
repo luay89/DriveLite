@@ -33,3 +33,8 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# DriveLite fixed signing key (personal sideload only) - committed so CI signs consistently
+!keystore/drivelite.jks
+
+out/

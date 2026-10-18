@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_maps">الخرائط</string>
+    <string name="tile_radio">الراديو</string>
+    <string name="tile_phone">الهاتف</string>
+    <string name="tile_music">الموسيقى</string>
+    <string name="tile_apps">التطبيقات</string>
+    <string name="tile_settings">الإعدادات</string>
+
+    <string name="banner_set_home">اضغط لجعل DriveLite الواجهة الرئيسية</string>
+    <string name="back">رجوع</string>
+    <string name="apps_title">كل التطبيقات</string>
+    <string name="apps_empty">لا توجد تطبيقات</string>
+    <string name="loading">جارٍ التحميل…</string>
+
+    <string name="not_found_title">لم يُعثر على تطبيق %1$s</string>
+    <string name="not_found_msg">لم يجد DriveLite تطبيقًا مناسبًا على هذه الشاشة. يمكنك اختيار تطبيق يدويًا. (تلميح: اضغط مطولًا على أي من الأزرار الأربعة لتغيير تطبيقه.)</string>
+    <string name="choose_app">اختيار تطبيق</string>
+    <string name="cancel">إلغاء</string>
+    <string name="pick_title">التطبيق لزر «%1$s»</string>
+    <string name="pick_auto">تلقائي</string>
+    <string name="saved">تم الحفظ</string>
+    <string name="cannot_open">تعذر فتح هذا التطبيق</string>
+
+    <string name="settings_title">إعدادات DriveLite</string>
+    <string name="sec_theme">الثيم</string>
+    <string name="sec_home">الواجهة الرئيسية</string>
+    <string name="sec_shortcuts">الاختصارات</string>
+    <string name="sec_about">حول التطبيق</string>
+
+    <string name="home_status_yes">DriveLite هو الواجهة الرئيسية الحالية.</string>
+    <string name="home_status_no">DriveLite ليس الواجهة الرئيسية الافتراضية بعد.</string>
+    <string name="btn_set_home">تعيين DriveLite واجهة رئيسية</string>
+    <string name="btn_return_home">العودة إلى الواجهة الأصلية</string>
+    <string name="return_hint">للعودة الدائمة اختر واجهة السيارة الأصلية تطبيقَ Home الافتراضي. ويمكنك فتحها الآن من الأسفل، لكن زر Home سيعيدك إلى DriveLite ما لم تغيّر الإعداد الافتراضي.</string>
+    <string name="open_now">افتح الآن: %1$s</string>
+    <string name="no_other_homes">لم يُعثر على واجهة رئيسية أخرى.</string>
+    <string name="manual_title">تغيير الواجهة الرئيسية يدويًا</string>
+    <string name="manual_msg">افتح إعدادات Android ← التطبيقات ← التطبيقات الافتراضية ← تطبيق الشاشة الرئيسية، ثم اختر واجهة السيارة الأصلية (أو DriveLite).</string>
+    <string name="ok">حسنًا</string>
+
+    <string name="shortcuts_hint">اضغط مطولًا على الخرائط أو الراديو أو الهاتف أو الموسيقى في الشاشة الرئيسية لتعيين أي تطبيق.</string>
+    <string name="btn_reset_shortcuts">إعادة الاختصارات إلى الوضع التلقائي</string>
+    <string name="version_fmt">الإصدار %1$s · Android %2$s · %3$d×%4$d بكسل</string>
+
+    <string name="theme_midnight">منتصف الليل</string>
+    <string name="theme_graphite">جرافيت</string>
+    <string name="theme_ocean">المحيط</string>
+    <string name="theme_amber">كهرماني</string>
+</resources>
