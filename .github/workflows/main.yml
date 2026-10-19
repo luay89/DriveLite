@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write   # needed to publish the APK as a GitHub Release
+
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -73,11 +76,27 @@ jobs:
             echo "================ $f"
             unzip -tq "$f"
             "$BT/aapt2" dump badging "$f" | grep -E "^package:|sdkVersion|targetSdkVersion|launchable-activity" || true
-            echo "::notice::$(basename $f) $("$BT/aapt2" dump badging "$f" | grep -E "^sdkVersion|^package:" | tr '\n' ' ') size=$(stat -c%s "$f")"
+            MIN=$("$BT/aapt2" dump badging "$f" | grep -oE "(min)?[sS]dkVersion:'[0-9]+'" | head -1)
+            SIG=$("$BT/apksigner" verify --verbose "$f" | grep -E "Verified using v[0-9]" | sed 's/Verified using //' | tr '\n' ' ')
+            echo "::notice::$(basename $f) $MIN size=$(stat -c%s "$f") | $SIG"
             "$BT/apksigner" verify --verbose --print-certs "$f" | grep -E "Verified using|Signer #1 certificate (DN|SHA-256)"
             ls -lh "$f"
           done
           (cd out && sha256sum *.apk | tee SHA256SUMS.txt)
+
+      - name: Publish GitHub Release (direct .apk download link)
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER=$(grep -oE 'versionName = "[^"]+"' app/build.gradle.kts | cut -d'"' -f2)
+          TAG="v${VER}-build${{ github.run_number }}"
+          cp out/DriveLite-release.apk out/DriveLite.apk
+          gh release create "$TAG" out/DriveLite.apk out/DriveLite-debug.apk out/SHA256SUMS.txt \
+            --title "DriveLite $VER (build ${{ github.run_number }})" \
+            --notes "Install **DriveLite.apk** on the car screen. Direct link: https://github.com/${{ github.repository }}/releases/latest/download/DriveLite.apk" \
+            --target "${{ github.sha }}" --latest
+          echo "::notice::Release $TAG -> https://github.com/${{ github.repository }}/releases/latest/download/DriveLite.apk"
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4
